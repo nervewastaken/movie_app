@@ -4,6 +4,34 @@ Overview
 
 This API provides functionality for managing movies, genres, actors, and related data. The API supports CRUD operations and advanced querying capabilities for movies and associated entities.
 
+How to run 
+1) Pull the repo
+2) navigate to project folder
+```bash
+cd movie_app
+```
+3) create a python virtual env in the folder itself
+```bash
+python3 -m venv .
+```
+4) install dependencies
+```bash
+pip install -r requirements.txt
+```
+5) run the app
+```bash
+python app.py
+```
+
+Runs on http://127.0.0.1:5000.
+Add endpoints as needed
+
+Syntax to use curl
+```bash
+curl -X GET http://127.0.0.1:5000/movies
+#this is an example API use, other API endpoints may need more data
+```
+
 Movies Endpoints
 
 GET /movies
