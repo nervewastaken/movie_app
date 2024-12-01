@@ -29,6 +29,49 @@ Add endpoints as needed
 Syntax to use curl
 ```bash
 curl -X GET http://127.0.0.1:5000/movies
+
+#add a movie
+
+curl -X POST http://localhost:5000/movies \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Inception",
+  "release_date": "2010-07-16",
+  "profit": 830.0
+}'
+
+#add an actor
+
+curl -X POST http://localhost:5000/actors \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Leonardo DiCaprio",
+  "birth_date": "1974-11-11"
+}'
+
+#map actor to a movie
+
+curl -X POST http://localhost:5000/movies/1/actors \
+-H "Content-Type: application/json" \
+-d '{
+  "actors": [1, 2, 3]
+}'
+
+#add a genre
+curl -X POST http://localhost:5000/genres \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Science Fiction"
+}'
+
+#assign genre to a movie
+
+curl -X POST http://localhost:5000/genres/movies/1 \
+-H "Content-Type: application/json" \
+-d '{
+  "genres": [1, 2]
+}'
+
 #this is an example API use, other API endpoints may need more data
 ```
 
