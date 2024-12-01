@@ -151,8 +151,6 @@ Additional Information
     "error": "Description of the error."
 }
 
-Here’s the API documentation for the new endpoints added to manage Crew and Work, including detailed descriptions, usage, and cURL examples.
-
 Crew Endpoints
 
 1. Add a New Crew Member
@@ -372,7 +370,5 @@ Edge Case Responses
 {
   "error": "Crew member is already assigned to this movie."
 }
-
-This documentation should cover all endpoints, providing a comprehensive guide for developers using your API. Let me know if you need further adjustments or additional features!
 
 Feel free to check out the repository for the complete source code!
