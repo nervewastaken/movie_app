@@ -1,28 +1,10 @@
 from flask_restful import Resource
 from flask import request
-from models import db, Movie, Actor, MovieActor, MovieCrew, Crew
+from models import db, Movie
 from schemas import MovieSchema
 from marshmallow import ValidationError
 
 class MovieListResource(Resource):
-    def get(self):
-        """Fetch all movies with optional filters and pagination."""
-        query = Movie.query
-        filters = request.args
-
-        # Filter by actor
-        if "actor" in filters:
-            query = query.join(MovieActor).join(Actor).filter(Actor.name == filters["actor"])
-
-        # Filter by director
-        if "director" in filters:
-            query = query.join(MovieCrew).filter(MovieCrew.role == "Director").join(Crew).filter(Crew.name == filters["director"])
-
-        # Execute query
-        movies = query.all()
-        schema = MovieSchema(many=True)
-        return schema.dump(movies), 200
-
     def post(self):
         """Add a new movie."""
         schema = MovieSchema()

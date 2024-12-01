@@ -36,19 +36,6 @@ class MovieActor(db.Model):
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), primary_key=True)
     actor_id = db.Column(db.Integer, db.ForeignKey('actors.id'), primary_key=True)
 
-# Crew table
-class Crew(db.Model):
-    __tablename__ = 'crew'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    availability = db.Column(db.Boolean, default=True)
-    experience = db.Column(db.Integer)
-
-class MovieCrew(db.Model):
-    __tablename__ = 'movie_crew'
-    movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), primary_key=True)
-    crew_id = db.Column(db.Integer, db.ForeignKey('crew.id'), primary_key=True)
-    role = db.Column(db.String(255))
 
 # Ratings table
 class Rating(db.Model):
@@ -69,3 +56,21 @@ class MovieProducer(db.Model):
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), primary_key=True)
     producer_id = db.Column(db.Integer, db.ForeignKey('producers.id'), primary_key=True)
     
+class Work(db.Model):
+    __tablename__ = 'works'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)  # Type of work
+
+
+class Crew(db.Model):
+    __tablename__ = 'crew'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    work_id = db.Column(db.Integer, db.ForeignKey('works.id'), nullable=False)  # Foreign key to Work table
+    movies_worked_in = db.Column(db.String(255))  # Comma-separated movie IDs
+    current_pay = db.Column(db.Float, nullable=False)
+    location = db.Column(db.String(255), nullable=False)
+    availability = db.Column(db.Boolean, default=True)
+
+    # Relationships
+    work = db.relationship('Work', backref='crew_members', lazy=True)

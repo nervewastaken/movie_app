@@ -151,6 +151,228 @@ Additional Information
     "error": "Description of the error."
 }
 
+Here’s the API documentation for the new endpoints added to manage Crew and Work, including detailed descriptions, usage, and cURL examples.
 
+Crew Endpoints
+
+1. Add a New Crew Member
+
+Endpoint: POST /crew
+
+Description: Adds a new crew member to the database.
+
+Request:
+
+	•	Method: POST
+	•	Headers: Content-Type: application/json
+	•	Body:
+
+{
+  "name": "John Doe",
+  "work_id": 1,
+  "current_pay": 500.0,
+  "location": "New York",
+  "availability": true
+}
+
+
+
+cURL Example:
+
+curl -X POST http://127.0.0.1:5000/crew \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "John Doe",
+  "work_id": 1,
+  "current_pay": 500.0,
+  "location": "New York",
+  "availability": true
+}'
+
+Response:
+
+{
+  "id": 1,
+  "name": "John Doe",
+  "work_id": 1,
+  "current_pay": 500.0,
+  "location": "New York",
+  "availability": true
+}
+
+2. Assign Crew to a Movie
+
+Endpoint: POST /movies/<int:movie_id>/crew
+
+Description: Maps a crew member to a specific movie.
+
+Request:
+
+	•	Method: POST
+	•	Headers: Content-Type: application/json
+	•	Path Parameters:
+	•	movie_id - The ID of the movie to which the crew is assigned.
+	•	Body:
+
+{
+  "crew_id": 1
+}
+
+
+
+cURL Example:
+
+curl -X POST http://127.0.0.1:5000/movies/1/crew \
+-H "Content-Type: application/json" \
+-d '{
+  "crew_id": 1
+}'
+
+Response:
+
+{
+  "message": "Crew member John Doe added to movie 'Movie Name'."
+}
+
+3. Get Crew Members for a Movie
+
+Endpoint: GET /movies/<int:movie_id>/crew
+
+Description: Retrieves all crew members assigned to a specific movie.
+
+Request:
+
+	•	Method: GET
+	•	Path Parameters:
+	•	movie_id - The ID of the movie.
+
+cURL Example:
+
+curl -X GET http://127.0.0.1:5000/movies/1/crew
+
+Response:
+
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "work": "Lighting",
+    "current_pay": 500.0,
+    "location": "New York",
+    "availability": true
+  }
+]
+
+4. Delete a Crew Member
+
+Endpoint: DELETE /crew/<int:crew_id>
+
+Description: Deletes a crew member from the database.
+
+Request:
+
+	•	Method: DELETE
+	•	Path Parameters:
+	•	crew_id - The ID of the crew member to delete.
+
+cURL Example:
+
+curl -X DELETE http://127.0.0.1:5000/crew/1
+
+Response:
+
+{
+  "message": "Crew member John Doe deleted successfully."
+}
+
+Work Endpoints
+
+1. Add a New Work Type
+
+Endpoint: POST /works
+
+Description: Adds a new work type (e.g., Lighting, Makeup).
+
+Request:
+
+	•	Method: POST
+	•	Headers: Content-Type: application/json
+	•	Body:
+
+{
+  "name": "Lighting"
+}
+
+
+
+cURL Example:
+
+curl -X POST http://127.0.0.1:5000/works \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Lighting"
+}'
+
+Response:
+
+{
+  "id": 1,
+  "name": "Lighting"
+}
+
+2. Delete a Work Type
+
+Endpoint: DELETE /works/<int:work_id>
+
+Description: Deletes a work type if no crew members are assigned to it.
+
+Request:
+
+	•	Method: DELETE
+	•	Path Parameters:
+	•	work_id - The ID of the work type to delete.
+
+cURL Example:
+
+curl -X DELETE http://127.0.0.1:5000/works/1
+
+Response:
+
+	•	If successful:
+
+{
+  "message": "Work deleted successfully."
+}
+
+
+	•	If crew members are assigned:
+
+{
+  "error": "Cannot delete work type as it is assigned to crew members."
+}
+
+Edge Case Responses
+
+	1.	Crew ID does not exist (Mapping Crew to Movie):
+
+{
+  "error": "404 Not Found: Crew not found."
+}
+
+
+	2.	Work Type already exists:
+
+{
+  "error": "Work already exists."
+}
+
+
+	3.	Crew already assigned to a movie:
+
+{
+  "error": "Crew member is already assigned to this movie."
+}
+
+This documentation should cover all endpoints, providing a comprehensive guide for developers using your API. Let me know if you need further adjustments or additional features!
 
 Feel free to check out the repository for the complete source code!
